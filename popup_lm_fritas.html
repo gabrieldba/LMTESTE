@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif; /* Usar a fonte Inter do Google Fonts */
+            background-color: #000000;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            transition: all 0.3s;
+            animation: fadeIn 1s ease-in;
+            font-size: 16px;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+
+        .modal-content {
+            background-color: rgba(0, 0, 0, 0.7);
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, 0.2);
+			width: 400px; /* Define a largura do pop-up */
+            height: 300px; /* Define a altura do pop-up */
+        }
+
+        label {
+            margin-bottom: 5px;
+            color: #FFFFFF;
+        }
+
+        select, input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: all 0.3s ease-in-out;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        input[type="button"] {
+            width: 40%;
+            margin-top: 20px;
+            background: linear-gradient(to right, #FF7F00, #FF5500);
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 18px;
+            border: none;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            animation: buttonFadeInAnimation 1s ease-in;
+        }
+
+        input[type="button"]:hover {
+            animation: buttonBackgroundAnimation 0.3s ease;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Estilos para o logotipo */
+        .logo img {
+            width: 60px;
+            height: auto;
+        }
+
+        .logo-text {
+            font-size: 2em;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        /* Estilos para a centralização */
+        .center-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+		
+		.campo-container:last-child button {
+   		 margin-top: 20px;
+  		  display: block;
+  		  margin-left: auto;
+  		  margin-right: auto;
+  		  transition: background-color 0.3s ease, transform 0.3s ease;
+  		  background: linear-gradient(to right, #FF7F00, #FF5500);
+  		  color: white;
+ 		   cursor: pointer;
+ 		   padding: 10px;
+ 		   border-radius: 5px;
+ 		   font-size: 18px;
+ 		   border: none;
+		}
+
+		.campo-container:last-child button:hover {
+		    background: linear-gradient(to right, #FF5500, #FF7F00);
+		    transform: scale(1.1); /* Aumenta ligeiramente o tamanho ao passar o mouse sobre ele */
+		}
+    </style>
+</head>
+<body>
+    <div id="relatorios-popup">
+        <div class="modal-content">
+            <span id="fechar-popup-interno" class="close">&times;</span>
+            <div class="center-content">
+                <div class="logo-container">
+                    <div class="logo">
+                        <img src="https://raw.githubusercontent.com/gabrieldba/imagem/main/BStrac_logo%20verso%20icone_branca%2002.png" alt="BSREPORT Logo">
+                    </div>
+                    <h1 class="logo-text">BSREPORT</h1>
+                </div>
+                <form method="POST" action="https://driver-report.jonatanrodrigues.online/1eb932fc-392b-4683-af54-1161eb27e4dd/">
+
+                    <div hidden="" class="campo-container">
+                        <label for="modelo">Modelo:</label>
+                        <select id="modelo" name="modelo" required>
+                            <option value="Relatório de Grupo - Fritas">Relatório de Grupo - Fritas</option>
+                        </select>
+                        <br>
+                    </div>
+
+                    <div hidden="" class="campo-container">
+                        <label for="objeto">Objeto:</label>
+                        <select id="objeto" name="objeto" required>
+                            <option value="[LM FRITAS]">[LM FRITAS]</option>
+                        </select>
+                    </div>
+
+                    <div class="campo-container">
+                        <label for="funcao" class="campo-label">Função:</label>
+                        <select id="funcao" name="funcao" class="campo-input" required>
+                            <option value="Motorista">Motorista</option>
+                            <option value="Ajudante">Ajudante</option>
+                        </select>
+                    </div>
+
+                    <div class="campo-container">
+                        <label for="motorista_ajudante" class="campo-label">Nome:</label>
+                        <input list="nomes" id="motorista_ajudante" name="motorista_ajudante" class="campo-input" required>
+                        <datalist id="nomes">
+                        <option value="ALEJANDRO GONÇALVES DIAS">
+                        <option value="BILY DOUGLAS RIBEIRO">
+	                <option value="BRUNO GUEDES DOS PASSOS">
+                        <option value="CLAUDINEI JOSÉ SIQUEIRA BORGES">
+                        <option value="DIEGO QUEIROZ">
+                        <option value="ELIESER GUEDES DOS PASSOS">
+                        <option value="ELTON CARLOS DOS SANTOS">
+                        <option value="ERICK PEREIRA GALDO">
+                        <option value="EZEQUIAS ROSA DA SILVA">
+                        <option value="JEAN CARLOS DE ALMEIDA">
+			<option value="JOSE WELLINGTON DOS SANTOS OLIVEIRA">
+	                <option value="JOSE PRUDENTE DA CRUZ">
+			<option value="LUCINEI SOARES DA SILVA">
+                        <option value="LUAN JOSÉ DOS SANTOS">
+                        <option value="LUIS ALBERTO SANTANA LIMA">
+                        <option value="LUIZ OLIVEIRA NETO">
+	                <option value="MAURI GOMES DA SILVA">
+                        <option value="OLIVIO FIGUEIRA DE CAMARGO NETO">
+		        <option value="RODRIGO GUEDES DOS PASSOS">
+		        <option value="ROGERIO RIBEIRO">
+		        <option value="SERGIO SCHMITZ JUNIOR">
+                        <option value="THIAGO ANTUNES DE OLIVEIRA">    
+                        </datalist>
+                    </div>
+
+                    <div class="campo-container">
+                        <label for="data_inicial" class="campo-label">Data Inicial:</label>
+                        <input type="date" id="data_inicial" name="data_inicial" class="campo-input" required>
+                    </div>
+
+                    <div class="campo-container">
+                        <label for="data_final" class="campo-label">Data Final:</label>
+                        <input type="date" id="data_final" name="data_final" class="campo-input" required>
+                    </div>
+
+                    <div class="campo-container">
+                        <button type="submit" class="campo-input">Enviar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var relatoriosLink = document.getElementById("relatorios-link");
+            var relatoriosPopup = document.getElementById("relatorios-popup");
+
+            relatoriosLink.addEventListener("click", function(event) {
+                event.preventDefault();
+                relatoriosPopup.style.display = "block";
+            });
+
+            fecharPopupInterno.addEventListener("click", function() {
+                relatoriosPopup.style.display = "none";
+            });
+
+            fecharPopupExterno.addEventListener("click", function() {
+                relatoriosPopup.style.display = "none";
+            });
+        });
+    </script>
+</body>
+</html>
